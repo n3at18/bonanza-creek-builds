@@ -1,0 +1,63 @@
+# Builds the page from site/ plus the latest release: writes builds.json from the release, unpacks the web build
+# into play/, and deploys to GitHub Pages. Runs on every published or edited release and on every push to main.
+name: Deploy
+on:
+  release:
+    types: [published, edited]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p _site
+          cp -R site/. _site/
+          if gh release view -R "$REPO" --json tagName,publishedAt,body,assets > rel.json 2>/dev/null; then
+            web=false
+            if gh release download -R "$REPO" --pattern 'bonanza-creek-web.zip' -D /tmp/web 2>/dev/null; then
+              mkdir -p _site/play && unzip -q /tmp/web/bonanza-creek-web.zip -d _site/play && web=true
+            fi
+          else
+            echo '{}' > rel.json; web=false
+          fi
+          video=false; [ -f site/media/pitch.mp4 ] && video=true
+          python3 - "$web" "$video" <<'PY'
+          import json, sys
+          r = json.load(open("rel.json"))
+          out = {
+              "version": r.get("tagName", "").lstrip("v"),
+              "date": r.get("publishedAt", ""),
+              "notes": r.get("body", ""),
+              "assets": {a["name"]: {"url": a["url"], "size": a["size"]} for a in r.get("assets", [])},
+              "web": sys.argv[1] == "true",
+              "video": sys.argv[2] == "true",
+          }
+          json.dump(out, open("_site/builds.json", "w"), indent=1)
+          print(json.dumps({k: v for k, v in out.items() if k != "notes"}, indent=1))
+          PY
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

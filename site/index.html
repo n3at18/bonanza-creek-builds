@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonanza Creek · Builds</title>
+<meta name="description" content="Playable builds of Bonanza Creek: Gold Mining & Panning Simulator for Windows, macOS, Linux and the browser.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Bonanza Creek · Builds">
+<meta property="og:image" content="media/key_camp.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&family=Oswald:wght@400..700&family=Lato:wght@400;700;900&display=swap">
+<style>
+  :root {
+    --earth: #17100a; --walnut: #261a10; --timber: #6b4a26; --parch: #efe2c6; --soft: #cdbb98;
+    --muted: #a08d6c; --gold: #f2b84b; --pan: #d99a2b; --water: #7cc2b8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--earth); color: var(--parch); font: 18px/1.55 Lato, Arial, sans-serif; }
+  a { color: var(--gold); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  header { position: relative; min-height: 560px; display: flex; align-items: flex-end; overflow: hidden;
+           background: var(--earth) url(media/key_camp.jpg) center 40% / cover no-repeat; }
+  header::before { content: ""; position: absolute; inset: 0;
+           background: linear-gradient(180deg, rgba(23,16,10,.15) 0%, rgba(23,16,10,.25) 45%, var(--earth) 100%); }
+  header .wrap { position: relative; width: 100%; padding-bottom: 40px; }
+  h1 { font: 400 clamp(48px, 9vw, 104px)/1 Rye, Georgia, serif; color: var(--gold); margin: 0;
+       text-shadow: 0 6px 28px rgba(0,0,0,.7); letter-spacing: 1px; }
+  .sub { font: 500 clamp(18px, 2.6vw, 28px)/1.2 Oswald, Arial, sans-serif; letter-spacing: 3px; text-transform: uppercase;
+         margin: 14px 0 0; text-shadow: 0 3px 12px rgba(0,0,0,.8); }
+
+  section { padding: 48px 0 8px; }
+  h2 { font: 600 32px/1.15 Oswald, Arial, sans-serif; margin: 0 0 18px; }
+  .meta { color: var(--muted); font-size: 16px; margin: -8px 0 20px; }
+  .meta b { color: var(--gold); font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 6px; padding: 22px 20px; border-radius: 12px; text-decoration: none;
+          background: var(--walnut); border: 1px solid var(--timber); color: var(--parch); transition: border-color .15s, transform .15s; }
+  .card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .card.mine { border: 2px solid var(--gold); }
+  .card .os { font: 600 24px/1.1 Oswald, Arial, sans-serif; }
+  .card .act { font: 500 15px/1.2 Oswald, Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-top: auto; padding-top: 10px; }
+  .card .size { color: var(--muted); font-size: 15px; }
+  .card.off { opacity: .45; pointer-events: none; }
+  .card.play { background: var(--pan); border-color: var(--pan); color: var(--earth); }
+  .card.play .act, .card.play .size { color: var(--earth); }
+
+  video { width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 12px; background: #000; border: 1px solid var(--timber); }
+  .notes { white-space: pre-line; color: var(--soft); background: var(--walnut); border-left: 4px solid var(--pan); padding: 14px 18px; border-radius: 6px; margin: 20px 0 0; }
+  .tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; color: var(--soft); font-size: 16px; }
+  .tips h3 { font: 600 18px/1.2 Oswald, Arial, sans-serif; color: var(--parch); margin: 0 0 4px; letter-spacing: 1px; text-transform: uppercase; }
+  .tips p { margin: 0; }
+  code { background: var(--walnut); padding: 1px 6px; border-radius: 4px; font-size: 14px; }
+  footer { padding: 48px 0 56px; color: var(--muted); font-size: 15px; }
+  footer .contact { font: 600 24px/1.3 Oswald, Arial, sans-serif; color: var(--parch); margin-bottom: 10px; }
+  #video[hidden] { display: none; }
+
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } .tips { grid-template-columns: 1fr; } header { min-height: 420px; } }
+  @media (max-width: 460px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>BONANZA CREEK</h1>
+    <p class="sub">Gold Mining &amp; Panning Simulator</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="builds">
+    <h2>Playable builds</h2>
+    <p class="meta" id="meta">Latest build</p>
+    <div class="grid">
+      <a class="card" id="windows" data-asset="bonanza-creek-windows.zip"><span class="os">Windows</span><span class="size">64-bit · zip</span><span class="act">Download</span></a>
+      <a class="card" id="macos" data-asset="bonanza-creek-macos.zip"><span class="os">macOS</span><span class="size">Apple Silicon + Intel · zip</span><span class="act">Download</span></a>
+      <a class="card" id="linux" data-asset="bonanza-creek-linux.zip"><span class="os">Linux</span><span class="size">x86_64 · zip</span><span class="act">Download</span></a>
+      <a class="card play" id="web" href="play/"><span class="os">Play in browser</span><span class="size">Chrome or Edge · no install</span><span class="act">Play now</span></a>
+    </div>
+    <p class="notes" id="notes" hidden></p>
+  </section>
+
+  <section id="video" hidden>
+    <h2>Gameplay video</h2>
+    <video controls preload="metadata" playsinline poster="media/pitch_poster.jpg">
+      <source src="media/pitch.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <section>
+    <h2>First launch</h2>
+    <div class="tips">
+      <div><h3>Windows</h3><p>Unzip and run the .exe. SmartScreen may warn about an unsigned build: <i>More info → Run anyway</i>.</p></div>
+      <div><h3>macOS</h3><p>Unzip, then right-click the app → <i>Open</i> the first time (the build is not notarised yet).</p></div>
+      <div><h3>Linux</h3><p>Unzip, then <code>chmod +x</code> the .x86_64 file and run it.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="contact">Alex · <a href="mailto:n3at18@gmail.com">n3at18@gmail.com</a></p>
+    <p>The desktop builds are the full game; the browser build runs at lower settings. Saves stay on your machine.<br>
+    Music in the video: Kevin MacLeod (incompetech.com), licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+  </div>
+</footer>
+
+<script>
+(async () => {
+  let b = null;
+  try { b = await (await fetch("builds.json", { cache: "no-store" })).json(); } catch (e) {}
+  const assets = (b && b.assets) || {};
+  for (const card of document.querySelectorAll(".card[data-asset]")) {
+    const a = assets[card.dataset.asset];
+    if (!a) { card.classList.add("off"); card.querySelector(".act").textContent = "Coming soon"; continue; }
+    card.href = a.url;
+    card.querySelector(".size").textContent += ` · ${Math.round(a.size / 1048576)} MB`;
+  }
+  if (b && !b.web) { const w = document.getElementById("web"); w.classList.add("off"); w.querySelector(".act").textContent = "Coming soon"; }
+  if (b && b.version) {
+    const d = b.date ? new Date(b.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
+    document.getElementById("meta").innerHTML = `Version <b>${b.version}</b>${d ? " · " + d : ""}`;
+  }
+  if (b && b.notes && b.notes.trim()) { const n = document.getElementById("notes"); n.textContent = b.notes.trim(); n.hidden = false; }
+  if (b && b.video) document.getElementById("video").hidden = false;
+  // Highlight the visitor's own platform
+  const ua = navigator.userAgent, mine = /Windows/.test(ua) ? "windows" : /Mac OS X/.test(ua) ? "macos" : /Linux/.test(ua) && !/Android/.test(ua) ? "linux" : null;
+  if (mine) document.getElementById(mine).classList.add("mine");
+})();
+</script>
+</body>
+</html>
