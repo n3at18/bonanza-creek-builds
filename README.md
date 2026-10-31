@@ -32,3 +32,7 @@ to the one before it after the next deploy (Actions → Deploy → Run workflow)
 
 Images and the video are real captures of the game (see `gold-fever/docs/marketing/pitch-deck/assets/SHOTS.md`).
 Video music: Kevin MacLeod (incompetech.com), CC BY 4.0.
+
+## Deck page
+
+`site/deck/` is the pitch deck as one scrolling page, for friends to critique: https://bonanzacreek.lifewheel.us/deck/ . Regenerate it with `python3 export_web.py ~/source/steam/bonanza-creek-builds/site/deck` in `gold-fever/docs/marketing/pitch-deck/deck/`, then push.
