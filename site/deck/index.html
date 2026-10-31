@@ -12,8 +12,15 @@ h1,h2,h3,p,ul,ol{margin:0} img{display:block} section a{text-decoration:none;col
 .top a{font:500 15px Oswald,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#f2b84b;text-decoration:none;border:1px solid #6b4a26;padding:8px 14px;border-radius:20px}
 .item{position:relative} .num{position:absolute;left:-44px;top:4px;font:500 14px Oswald,Arial,sans-serif;color:#6b4a26;letter-spacing:1px}
 @media (max-width:1380px){.num{display:none}}
+#loader{position:fixed;inset:0;z-index:99;background:#0d0906;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .5s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .logo{font-size:clamp(34px,7vw,64px)}
+#bar{width:min(420px,80vw);height:8px;background:#2a1d10;border-radius:4px;overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:#f2b84b;transition:width .2s}
+#pct{font:500 15px Oswald,Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#a08d6c}
+#loader a{font:500 14px Oswald,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#f2b84b;text-decoration:none;border:1px solid #6b4a26;padding:8px 14px;border-radius:20px}
 .end{text-align:center;color:#a08d6c;font-size:15px;padding-top:16px} .end a{color:#f2b84b}
-</style></head><body><div class="wrap">
+</style></head><body><div id="loader"><div class="logo">BONANZA CREEK</div><div id="bar"><i></i></div><div id="pct">Loading the deck · 0%</div><a href="bonanza-creek-pitch.pdf">Or download the PDF</a></div><div class="wrap">
 <div class="top"><div><div class="logo">BONANZA CREEK</div><div class="sub">Gold Mining &amp; Panning Simulator · pitch deck</div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a href="bonanza-creek-pitch.pdf">Download PDF</a><a href="../">Play the builds →</a></div></div>
 <div class="item" id="s1"><div class="num">01</div><div class="frame"><div class="slide"><section id="cover" data-transition="fade" style="background:#17100a; color:#efe2c6; font-family:'Lato', Arial, sans-serif">
 <img src="media/evolution_cover_v2.gif" alt="The claim growing from an empty riverbank: first cuts, the sluice, bigger sluices, rigs, rails and ore carts, then the full camp" style="position:absolute; left:0px; top:0px; width:1920px; height:1080px; object-fit:cover">
@@ -399,4 +406,11 @@ h1,h2,h3,p,ul,ol{margin:0} img{display:block} section a{text-decoration:none;col
 function fit(){document.querySelectorAll('.frame').forEach(f=>f.firstChild.style.transform='scale('+f.clientWidth/1920+')')}
 addEventListener('resize',fit);addEventListener('load',fit);fit();
 if(window.ResizeObserver){new ResizeObserver(fit).observe(document.body)}
+(function(){var L=document.getElementById('loader'),B=document.querySelector('#bar i'),P=document.getElementById('pct');
+var imgs=[].slice.call(document.querySelectorAll('.slide img')),n=imgs.length,d=0,shown=false;
+function finish(){if(shown)return;shown=true;fit();B.style.width='100%';P.textContent='Ready';setTimeout(function(){L.classList.add('done')},250)}
+function tick(){d++;var f=n?d/n:1;B.style.width=Math.round(f*100)+'%';P.textContent='Loading the deck · '+Math.round(f*100)+'%';if(d>=n)(document.fonts?document.fonts.ready:Promise.resolve()).then(finish)}
+if(!n)finish();imgs.forEach(function(i){if(i.complete&&i.naturalWidth)tick();else{i.addEventListener('load',tick);i.addEventListener('error',tick)}});
+setTimeout(finish,25000)})();
+
 </script></body></html>
