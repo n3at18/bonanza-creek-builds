@@ -27,4 +27,5 @@ if gh release view "v$ver" -R "$repo" >/dev/null 2>&1; then
 else
 	gh release create "v$ver" "$tmp"/*.zip -R "$repo" --title "Bonanza Creek $ver" --notes "$notes" --latest
 fi
-echo "Published v$ver. The page updates in about a minute: https://bonanzacreek.lifewheel.us/"
+"$(dirname "$0")/firebase/deploy.sh"
+echo "Published v$ver: https://bonanzacreek.lifewheel.us/"

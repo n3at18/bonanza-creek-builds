@@ -17,7 +17,7 @@ Or on github.com: **Releases → Draft a new release**. Give it a tag like `v0.5
 named exactly `bonanza-creek-windows.zip`, `bonanza-creek-macos.zip`, `bonanza-creek-linux.zip` and
 `bonanza-creek-web.zip`, and click **Publish**.
 
-Either way, the page redeploys by itself in about a minute (Actions → Deploy). Older releases stay listed under
+The page is hosted on Firebase (project `bonanza-creek-play`; `bonanzacreek.lifewheel.us` is a CNAME to `bonanza-creek-play.web.app` in the lifewheel.us DNS at Turbify). `publish-build.sh` redeploys it at the end; after a release made on github.com, run `firebase/deploy.sh`. The old GitHub Pages copy at n3at18.github.io/bonanza-creek-builds still deploys from Actions but is no longer linked anywhere. Older releases stay listed under
 Releases, but the page only links the latest one. To pull a bad build, delete that release; the page then falls back
 to the one before it after the next deploy (Actions → Deploy → Run workflow).
 
