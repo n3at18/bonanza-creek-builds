@@ -36,7 +36,7 @@
   .meta { color: var(--muted); font-size: 16px; margin: -8px 0 20px; }
   .meta b { color: var(--gold); font-weight: 700; }
 
-  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .card { display: flex; flex-direction: column; gap: 6px; padding: 22px 20px; border-radius: 12px; text-decoration: none;
           background: var(--walnut); border: 1px solid var(--timber); color: var(--parch); transition: border-color .15s, transform .15s; }
   .card:hover { border-color: var(--gold); transform: translateY(-2px); }
@@ -45,11 +45,9 @@
   .card .act { font: 500 15px/1.2 Oswald, Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-top: auto; padding-top: 10px; }
   .card .size { color: var(--muted); font-size: 15px; }
   .card.off { opacity: .45; pointer-events: none; }
-  .card.play { background: var(--pan); border-color: var(--pan); color: var(--earth); }
-  .card.play .act, .card.play .size { color: var(--earth); }
+  .alt { color: var(--muted); font-size: 15px; margin: 18px 0 0; }
 
   video { width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 12px; background: #000; border: 1px solid var(--timber); }
-  .notes { white-space: pre-line; color: var(--soft); background: var(--walnut); border-left: 4px solid var(--pan); padding: 14px 18px; border-radius: 6px; margin: 20px 0 0; }
   .tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; color: var(--soft); font-size: 16px; }
   .tips h3 { font: 600 18px/1.2 Oswald, Arial, sans-serif; color: var(--parch); margin: 0 0 4px; letter-spacing: 1px; text-transform: uppercase; }
   .tips p { margin: 0; }
@@ -58,7 +56,7 @@
   footer .contact { font: 600 24px/1.3 Oswald, Arial, sans-serif; color: var(--parch); margin-bottom: 10px; }
   #video[hidden] { display: none; }
 
-  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } .tips { grid-template-columns: 1fr; } header { min-height: 420px; } }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .tips { grid-template-columns: 1fr; } header { min-height: 420px; } }
   @media (max-width: 460px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -78,9 +76,8 @@
       <a class="card" id="windows" data-asset="bonanza-creek-windows.zip"><span class="os">Windows</span><span class="size">64-bit · zip</span><span class="act">Download</span></a>
       <a class="card" id="macos" data-asset="bonanza-creek-macos.zip"><span class="os">macOS</span><span class="size">Apple Silicon + Intel · zip</span><span class="act">Download</span></a>
       <a class="card" id="linux" data-asset="bonanza-creek-linux.zip"><span class="os">Linux</span><span class="size">x86_64 · zip</span><span class="act">Download</span></a>
-      <a class="card play" id="web" href="play/"><span class="os">Play in browser</span><span class="size">Chrome or Edge · no install</span><span class="act">Play now</span></a>
     </div>
-    <p class="notes" id="notes" hidden></p>
+    <p class="alt" id="web"><a href="play/">Quick look in the browser</a> · a lighter build at lower settings; the downloads are the real game</p>
   </section>
 
   <section id="video" hidden>
@@ -119,12 +116,11 @@
     card.href = a.url;
     card.querySelector(".size").textContent += ` · ${Math.round(a.size / 1048576)} MB`;
   }
-  if (b && !b.web) { const w = document.getElementById("web"); w.classList.add("off"); w.querySelector(".act").textContent = "Coming soon"; }
+  if (b && !b.web) document.getElementById("web").hidden = true;
   if (b && b.version) {
     const d = b.date ? new Date(b.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
     document.getElementById("meta").innerHTML = `Version <b>${b.version}</b>${d ? " · " + d : ""}`;
   }
-  if (b && b.notes && b.notes.trim()) { const n = document.getElementById("notes"); n.textContent = b.notes.trim(); n.hidden = false; }
   if (b && b.video) document.getElementById("video").hidden = false;
   // Highlight the visitor's own platform
   const ua = navigator.userAgent, mine = /Windows/.test(ua) ? "windows" : /Mac OS X/.test(ua) ? "macos" : /Linux/.test(ua) && !/Android/.test(ua) ? "linux" : null;

@@ -1,9 +1,9 @@
 # Bonanza Creek builds
 
-The page publishers get from the pitch deck: **https://n3at18.github.io/bonanza-creek-builds/**
+The page publishers get from the pitch deck: **https://bonanzacreek.lifewheel.us/**
 
-It always shows the latest release: Windows, macOS and Linux downloads, a "Play in browser" button (the web build,
-unpacked into `play/`), the version, the date, the release notes as "what's new", and the gameplay video.
+It always shows the latest release: Windows, macOS and Linux downloads, a small "quick look in the browser" link (the web build,
+unpacked into `play/`), the version, the date and the gameplay video.
 
 ## Put up a new build
 

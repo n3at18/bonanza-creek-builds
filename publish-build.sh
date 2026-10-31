@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Publish a new set of builds to https://n3at18.github.io/bonanza-creek-builds/
+# Publish a new set of builds to https://bonanzacreek.lifewheel.us/
 #   ./publish-build.sh <version> ["what changed"] [folder with the four zips]
 # Takes gold-fever's build/itch/gold-fever-{windows,macos,linux,web}.zip (made by tools/export_itch.sh), uploads them
 # as release v<version> named bonanza-creek-*.zip, and the release starts the page deploy (about a minute).
@@ -27,4 +27,4 @@ if gh release view "v$ver" -R "$repo" >/dev/null 2>&1; then
 else
 	gh release create "v$ver" "$tmp"/*.zip -R "$repo" --title "Bonanza Creek $ver" --notes "$notes" --latest
 fi
-echo "Published v$ver. The page updates in about a minute: https://n3at18.github.io/bonanza-creek-builds/"
+echo "Published v$ver. The page updates in about a minute: https://bonanzacreek.lifewheel.us/"
