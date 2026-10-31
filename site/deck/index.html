@@ -410,7 +410,7 @@ if(window.ResizeObserver){new ResizeObserver(fit).observe(document.body)}
 var imgs=[].slice.call(document.querySelectorAll('.slide img')),vids=[].slice.call(document.querySelectorAll('.slide video[autoplay]')),n=imgs.length+vids.length,d=0,shown=false;
 function finish(){if(shown)return;shown=true;fit();B.style.width='100%';P.textContent='Ready';setTimeout(function(){L.classList.add('done')},250)}
 function tick(){d++;var f=n?d/n:1;B.style.width=Math.round(f*100)+'%';P.textContent='Loading the deck · '+Math.round(f*100)+'%';if(d>=n)(document.fonts?document.fonts.ready:Promise.resolve()).then(finish)}
-if(!n)finish();imgs.forEach(function(i){if(i.complete&&i.naturalWidth)tick();else{i.addEventListener('load',tick);i.addEventListener('error',tick)}});vids.forEach(function(v){if(v.readyState>=2)tick();else{var o=false,f=function(){if(!o){o=true;tick()}};v.addEventListener('loadeddata',f);v.addEventListener('error',f)}});
+if(!n)finish();imgs.forEach(function(i){if(i.complete&&i.naturalWidth)tick();else{i.addEventListener('load',tick);i.addEventListener('error',tick)}});vids.forEach(function(v){var o=false,f=function(){if(!o){o=true;tick()}};if(v.readyState>=4)f();else{v.addEventListener('canplaythrough',f);v.addEventListener('playing',f);v.addEventListener('error',f);try{v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}catch(e){}}});
 setTimeout(finish,25000)})();
 
 </script></body></html>
